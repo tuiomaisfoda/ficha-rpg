@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ficha RPG Completa com Emojis</title>
+<style>
+body {
+    font-family: 'Ancient Medium';
+    background: #121212;
+    color: #eee;
+    padding: 20px;
+    max-width: 720px;
+    margin: auto;
+  }
+
+   h2 {
+      margin-bottom: 10px;
+    }
+
+    .campo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .campo label {
+      width: 180px;
+    }
+
+    .campo input[type="number"] {
+      width: 60px;
+      margin-right: 10px;
+      padding: 4px;
+    }
+
+    .bolinha {
+      width: 18px;
+      height: 18px;
+      border: 2px solid white;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      margin-left: 5px;
+      background-color: transparent;
+      transition: background-color 0.3s;
+    }
+
+    .bolinha.preenchida {
+      background-color: white;
+    }
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  h2 {
+    border-bottom: 2px solid #555;
+    padding-bottom: 5px;
+    margin-top: 30px;
+  }
+  .emoji-perfil {
+    font-size: 3em;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .seta-trocar {
+    font-size: 0.5em;
+    background: none;
+    border: none;
+    color: #909090;
+    cursor: pointer;
+    user-select: none;
+    padding: 0;
+  }
+  #emojiArea {
+    display: none;
+    margin: 10px 0 20px 0;
+    background: #222;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  .emoji-item {
+    font-size: 2em;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.3s ease;
+  }
+  .emoji-item:hover {
+    transform: scale(1.3);
+  }
+  .campo {
+    margin: 10px 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  label {
+    min-width: 150px;
+    font-weight: bold;
+  }
+  input[type=text], input[type=number] {
+    flex: 1;
+    background: #222;
+    border: 1px solid #555;
+    border-radius: 5px;
+    padding: 6px 10px;
+    color: #eee;
+  }
+  input[type=number] {
+    max-width: 100px;
+  }
+  .mini-campos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .mini-campo {
+    background: #222;
+    padding: 10px;
+    border-radius: 6px;
+    flex: 1 1 90px;
+    text-align: center;
+  }
+  .mini-campo label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  .mini-campo input {
+    width: 100%;
+    text-align: right;
+  }
+  .tabela-header, .linha-item {
+    display: grid;
+    gap: 8px;
+    margin-top: 10px;
+    align-items: center;
+  }
+  .tabela-header {
+    font-weight: bold;
+    border-bottom: 2px solid #67c5ff;
+    padding-bottom: 5px;
+    grid-template-columns: 1fr 1fr 1fr auto;
+  }
+  .linha-item {
+    grid-template-columns: 1fr 1fr 1fr auto;
+  }
+  .linha-item input {
+    background: #222;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 6px 8px;
+    color: #eee;
+  }
+  .btn, .btn-add {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    font-size: 1.1em;
+    background: #560000;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .btn:hover, .btn-add:hover {
+    background: #57a9e1;
+  }
+  .btn-remover {
+    background: #aa4444;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.9em;
+  }
+  .btn-remover:hover {
+    background: #cc6666;
+  }
+  
+  /* Inventário, Características e Talentos extras - grid 1fr auto */
+  .inventario .tabela-header,
+  .inventario .linha-item,
+  .caracteristicas .tabela-header,
+  .caracteristicas .linha-item,
+  .talentos-extras .tabela-header,
+  .talentos-extras .linha-item {
+    grid-template-columns: 1fr auto;
+  }
+
+  .lado-a-lado {
+  display: flex;
+  gap: 20px; /* espaço entre os blocos */
+  justify-content: center; /* centraliza na horizontal */
+  align-items: flex-start; /* alinha ao topo */
+  flex-wrap: wrap; /* faz responsivo em telas pequenas */
+}
+
+   .info-combate {
+    width: 420px;
+    margin: 10px auto; /* centraliza na horizontal */
+    background-color: #232424;
+    padding: 1px;
+    border-radius: 10px;
+}
+
+        .mini-campos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.mini-campo {
+    background-color: #754e4e;
+    padding: 6px;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80px; /* menor que os 90px anteriores */
+}
+
+.mini-campo label {
+    font-size: 0.75em; /* menor */
+    text-align: center;
+    margin-bottom: 6px;
+    color: #f0f0f0;
+    font-weight: bold;
+}
+
+.mini-campo input {
+    width: 100%;
+    text-align: right;
+    background-color: #39393a;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 4px;
+    color: #f0f0f0;
+    font-size: 0.9em;
+    font-family: fantasy;
+}
+
+.mini-campo input::placeholder {
+    color: #a0a0a0;
+}
+
+ #dice-container {
+    width: 250px;
+    border: 1,5px solid #333;
+    border-radius: 10px;
+    padding: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #5a5e62;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  }
+
+  #dice-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 700;
+    font-size: 1.2em;
+    color: #222;
+  }
+
+  #dice-list {
+    margin-top: 15px;
+    display: none;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  #dice-list.expanded {
+    display: flex;
+  }
+
+  .dice {
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    user-select: none;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 4px 10px rgba(0,0,0,0.12);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .dice:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 14px 4px #007bff88;
+  }
+
+  .dice.selected {
+    box-shadow: 0 0 18px 5px #0056b3;
+    transform: scale(1.2);
+  }
+
+  .dice svg polygon {
+    stroke: #222;
+    stroke-width: 2px;
+  }
+
+  /* Cores diferentes para cada tipo de dado */
+  .dice[data-name="d4"] svg polygon { fill: #e67e22; }
+  .dice[data-name="d6"] svg polygon { fill: #3498db; }
+  .dice[data-name="d8"] svg polygon { fill: #9b59b6; }
+  .dice[data-name="d10"] svg polygon { fill: #2ecc71; }
+  .dice[data-name="d12"] svg polygon { fill: #e74c3c; }
+  .dice[data-name="d20"] svg polygon { fill: #f1c40f; }
+
+  #roll-btn {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1.05em;
+    cursor: pointer;
+    border-radius: 6px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    font-weight: 600;
+    transition: background-color 0.25s ease;
+  }
+
+  #roll-btn:disabled {
+    background-color: #999;
+    cursor: default;
+  }
+
+  #roll-btn:not(:disabled):hover {
+    background-color: #0056b3;
+  }
+
+  #modifier-container {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #222;
+  }
+
+  #modifier-input {
+    width: 50px;
+    padding: 6px 8px;
+    font-size: 1.1em;
+    border-radius: 6px;
+    border: 1.8px solid #ccc;
+    text-align: center;
+    transition: border-color 0.2s ease;
+  }
+
+  #modifier-input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+
+  #result {
+    margin-top: 20px;
+    font-weight: 700;
+    font-size: 1.2em;
+    color: #222;
+    min-height: 40px;
+  }
+  
+  .btn-salvar {
+  background-color: #1e5f2f;
+}
+.btn-salvar:hover {
+  background-color: #2ecc71;
+}
+
+.btn-carregar {
+  background-color: #3a3a70;
+}
+.btn-carregar:hover {
+  background-color: #5c5cbf;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Ficha de RPG</h1>
+
+<div class="emoji-perfil" onclick="toggleEmojiArea()" title="Clique para trocar o emoji do personagem">
+  <span id="emojiPerfil"></span>
+  <button class="seta-trocar" aria-label="Trocar emoji">▶</button>
+</div>
+
+<div id="emojiArea">
+  <div class="emoji-item" title="Ladino" onclick="adicionarEmoji('🥷')">🥷</div>
+  <div class="emoji-item" title="Bardo" onclick="adicionarEmoji('🪕​')">🪕​</div>
+  <div class="emoji-item" title="Bruxo" onclick="adicionarEmoji('🔮')">🔮</div>
+  <div class="emoji-item" title="Clérigo" onclick="adicionarEmoji('✞')">✞</div>
+  <div class="emoji-item" title="Druida" onclick="adicionarEmoji('🐾')">🐾</div>
+  <div class="emoji-item" title="Feiticeiro" onclick="adicionarEmoji('🪄')">🪄</div>
+  <div class="emoji-item" title="Paladino" onclick="adicionarEmoji('🛡️')">🛡️</div>
+  <div class="emoji-item" title="Barbaro" onclick="adicionarEmoji('🔨')">🔨</div>
+  <div class="emoji-item" title="Mago" onclick="adicionarEmoji('📜')">📜</div>
+  <div class="emoji-item" title="Monge" onclick="adicionarEmoji('☯')">☯</div>
+  <div class="emoji-item" title="Guerreiro" onclick="adicionarEmoji('⚔️')">⚔️</div>
+  <div class="emoji-item" title="Patrulheiro" onclick="adicionarEmoji('🏹')">🏹</div>
+</div>
+
+<div class="lado-a-lado">
+<div id="dice-container">
+  <div id="dice-header">
+    <span>Selecione os dados</span>
+    <span id="toggle-btn" aria-label="Expandir ou recolher dados">▼</span>
+  </div>
+
+  <div id="dice-list" aria-live="polite" aria-atomic="true">
+    <!-- Dados criados pelo JS -->
+  </div>
+
+  <div id="modifier-container">
+    <label for="modifier-input">Modificador:</label>
+    <input type="number" id="modifier-input" value="0" step="1" aria-label="Modificador de dados" />
+  </div>
+
+  <button id="roll-btn" disabled aria-disabled="true">Rolar Dados</button>
+  <div id="result" role="region" aria-live="polite" aria-atomic="true"></div>
+</div>
+
+
+<div class="info-combate">
+            <div class="mini-campos">
+                <div class="mini-campo">
+                    <label>CA</label>
+                    <input type="number" placeholder="AC" />
+                </div>
+                <div class="mini-campo">
+                    <label>Vida</label>
+                    <input type="number" placeholder="HP" />
+                </div>
+                <div class="mini-campo">
+                    <label>Máx</label>
+                    <input type="number" placeholder="HP Máx" />
+                </div>
+                <div class="mini-campo">
+                    <label>Temp</label>
+                    <input type="number" placeholder="HP Temp" />
+                </div>
+                <div class="mini-campo">
+                    <label>Dado</label>
+                    <input type="text" placeholder="ex: 1d8" />
+                </div>
+                <div class="mini-campo">
+                    <label>Mov</label>
+                    <input type="text" placeholder="ex: 9m" />
+                </div>
+                <div class="mini-campo">
+                    <label>Init</label>
+                    <input type="number" placeholder="ex: +3" />
+                </div>
+            </div>
+        </div>
+
+</div>
+
+<div class="campo">
+  <label>Nome:</label>
+  <input type="text" value="Milo Galho Caído">
+</div>
+<div class="campo">
+  <label>Classe:</label>
+  <input type="text" value="Monge">
+</div>
+<div class="campo">
+  <label>Nível:</label>
+  <input type="number" value="4">
+</div>
+<div class="campo">
+  <label>Antecedente:</label>
+  <input type="text" value="Artista">
+</div>
+<div class="campo">
+  <label>Raça:</label>
+  <input type="text" value="Halfling">
+</div>
+<div class="campo">
+  <label>Alinhamento:</label>
+  <input type="text" value="Leal/Bom">
+</div>
+<h2>🧠 Atributos</h2>
+<div>
+  <div class="campo"><label>Força:</label><input type="number" value="14"><input type="number" placeholder="+1"></div>
+  <div class="campo"><label>Destreza:</label><input type="number" value="16"><input type="number" placeholder="+3"></div>
+  <div class="campo"><label>Constituição:</label><input type="number" value="13"><input type="number" placeholder="-1"></div>
+  <div class="campo"><label>Inteligência:</label><input type="number" value="10"><input type="number" placeholder="+0"></div>
+  <div class="campo"><label>Sabedoria:</label><input type="number" value="15"><input type="number" placeholder="+1"></div>
+  <div class="campo"><label>Carisma:</label><input type="number" value="12"><input type="number" placeholder="+2"></div>
+</div>
+<h2>⭐ Perícia</h2>
+  <div id="pericias">
+    <div class="campo"><label>Atletismo:</label><input type="number" value="14"><div class="bolinha"></div></div>
+    <div class="campo"><label>Acrobacia:</label><input type="number" value="16"><div class="bolinha"></div></div>
+    <div class="campo"><label>Furtividade:</label><input type="number" value="13"><div class="bolinha"></div></div>
+    <div class="campo"><label>Prestidiação:</label><input type="number" value="10"><div class="bolinha"></div></div>
+    <div class="campo"><label>Arcanismo:</label><input type="number" value="15"><div class="bolinha"></div></div>
+    <div class="campo"><label>História:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Investigação:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Natureza:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Religião:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Intuição:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Medicina:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Percepção:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Sobrevivência:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Falar com Animais:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Atuação:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Enganação:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Intimidação:</label><input type="number" value="12"><div class="bolinha"></div></div>
+    <div class="campo"><label>Persuasão:</label><input type="number" value="12"><div class="bolinha"></div></div>
+  </div>
+
+</div>
+<h2>🛡 Salvaguardas</h2>
+<div>
+  <div class="campo"><label>Força:</label><input type="number" value="2"></div>
+  <div class="campo"><label>Destreza:</label><input type="number" value="5"></div>
+  <div class="campo"><label>Constituição:</label><input type="number" value="1"></div>
+  <div class="campo"><label>Inteligência:</label><input type="number" value="0"></div>
+  <div class="campo"><label>Sabedoria:</label><input type="number" value="2"></div>
+  <div class="campo"><label>Carisma:</label><input type="number" value="3"></div>
+</div>
+
+<h2>⚔️ Armas / Conjurações</h2>
+<div id="armasTabela">
+  <div class="tabela-header">
+    <div>Nome</div>
+    <div>Dano</div>
+    <div>Bonus ATK</div>
+    <div></div>
+  </div>
+</div>
+<button class="btn-add" onclick="adicionarLinha('armasTabela', ['Nome', 'Dano', 'Tipo'])">+ Adicionar Arma/Conjuração</button>
+
+
+<h2>🧳 Inventário</h2>
+<div id="inventarioTabela" class="inventario">
+  <div class="tabela-header">
+    <div>Item</div>
+    <div></div>
+  </div>
+</div>
+<button class="btn-add" onclick="adicionarLinha('inventarioTabela', ['Item'])">+ Adicionar Item</button>
+
+<h2>⚙️ Características</h2>
+<div id="caracteristicasTabela" class="caracteristicas">
+  <div class="tabela-header">
+    <div>Característica</div>
+    <div></div>
+  </div>
+</div>
+<button class="btn-add" onclick="adicionarLinha('caracteristicasTabela', ['Característica'])">+ Adicionar Característica</button>
+
+<h2>✨ Talentos Extras</h2>
+<div id="talentosExtrasTabela" class="talentos-extras">
+  <div class="tabela-header">
+    <div>Talento</div>
+    <div></div>
+  </div>
+</div>
+<button class="btn-add" onclick="adicionarLinha('talentosExtrasTabela', ['Talento'])">+ Adicionar Talento</button>
+
+<button class="btn btn-salvar" onclick="salvarFicha()">💾 Salvar</button>
+<button class="btn btn-carregar" onclick="carregarFicha()">📂 Carregar</button>
+
+<script>
+  // Trocar emoji do personagem
+  function toggleEmojiArea() {
+    const area = document.getElementById('emojiArea');
+    area.style.display = area.style.display === 'flex' ? 'none' : 'flex';
+  }
+
+  function adicionarEmoji(emoji) {
+    document.getElementById('emojiPerfil').textContent = emoji;
+    toggleEmojiArea();
+  }
+
+  // Adicionar linhas genéricas para tabelas com colunas dinâmicas
+  function adicionarLinha(idTabela, colunas) {
+    const tabela = document.getElementById(idTabela);
+    const linha = document.createElement('div');
+    linha.className = 'linha-item';
+    colunas.forEach(() => {
+      const input = document.createElement('input');
+      input.type = 'text';
+      linha.appendChild(input);
+    });
+
+    // Botão remover
+    const btnRemover = document.createElement('button');
+    btnRemover.textContent = '❌';
+    btnRemover.className = 'btn-remover';
+    btnRemover.onclick = () => {
+      linha.remove();
+    };
+    linha.appendChild(btnRemover);
+
+    tabela.appendChild(linha);
+  }
+  // Salvar os dados da ficha no localStorage
+  function salvarFicha() {
+    const ficha = {};
+
+    // Emoji do perfil
+    ficha.emoji = document.getElementById('emojiPerfil').textContent;
+
+    // Campos simples (nome, classe, etc)
+    const camposSimples = ['Nome', 'Classe', 'Nível', 'Antecedente', 'Raça', 'Alinhamento'];
+    camposSimples.forEach(nome => {
+      const input = Array.from(document.querySelectorAll('.campo label')).find(l => l.textContent === nome);
+      if (input) ficha[nome.toLowerCase()] = input.nextElementSibling.value;
+    });
+
+    // Info combate (inputs dentro de .info-combate)
+    ficha.combate = {};
+    document.querySelectorAll('.info-combate input').forEach(input => {
+      const label = input.previousElementSibling ? input.previousElementSibling.textContent : input.placeholder;
+      ficha.combate[label.toLowerCase()] = input.value;
+    });
+
+    // Atributos (6 campos, cada um com dois inputs)
+    ficha.atributos = {};
+    const nomesAtributos = ['Força', 'Destreza', 'Constituição', 'Inteligência', 'Sabedoria', 'Carisma'];
+    nomesAtributos.forEach(nome => {
+      const div = Array.from(document.querySelectorAll('h2 + div > .campo')).find(div => div.querySelector('label').textContent === nome);
+      if (div) {
+        const inputs = div.querySelectorAll('input');
+        ficha.atributos[nome.toLowerCase()] = {
+          valor: inputs[0].value,
+          modificador: inputs[1].value
+        };
+      }
+    });
+
+    // Salvaguardas
+    ficha.salvaguardas = {};
+    const divsSalv = document.querySelectorAll('h2:nth-of-type(3) + div > .campo');
+    divsSalv.forEach(div => {
+      const nome = div.querySelector('label').textContent;
+      ficha.salvaguardas[nome.toLowerCase()] = div.querySelector('input').value;
+    });
+
+    // Função para pegar dados das tabelas dinâmicas (armas, inventário, características, talentos)
+    function pegarTabela(idTabela, colunas) {
+      const tabela = document.getElementById(idTabela);
+      const linhas = tabela.querySelectorAll('.linha-item');
+      const dados = [];
+      linhas.forEach(linha => {
+        const inputs = linha.querySelectorAll('input');
+        if (inputs.length === colunas.length) {
+          const item = {};
+          inputs.forEach((input, i) => {
+            item[colunas[i].toLowerCase()] = input.value;
+          });
+          dados.push(item);
+        }
+      });
+      return dados;
+    }
+
+    ficha.armas = pegarTabela('armasTabela', ['Nome', 'Dano', 'Tipo']);
+    ficha.inventario = pegarTabela('inventarioTabela', ['Item']);
+    ficha.caracteristicas = pegarTabela('caracteristicasTabela', ['Característica']);
+    ficha.talentos = pegarTabela('talentosExtrasTabela', ['Talento']);
+
+    // Salvar no localStorage
+    localStorage.setItem('fichaRPG', JSON.stringify(ficha));
+    alert('Ficha salva com sucesso no navegador!');
+  }
+
+  // Carregar os dados do localStorage e preencher o formulário
+  function carregarFicha() {
+    const fichaStr = localStorage.getItem('fichaRPG');
+    if (!fichaStr) {
+      alert('Nenhuma ficha salva encontrada no navegador.');
+      return;
+    }
+    const ficha = JSON.parse(fichaStr);
+
+    // Emoji
+    if (ficha.emoji) document.getElementById('emojiPerfil').textContent = ficha.emoji;
+
+    // Campos simples
+    const camposSimples = ['nome', 'classe', 'nível', 'antecedente', 'raça', 'alinhamento'];
+    camposSimples.forEach(nome => {
+      const label = Array.from(document.querySelectorAll('.campo label')).find(l => l.textContent.toLowerCase() === nome);
+      if (label) label.nextElementSibling.value = ficha[nome] || '';
+    });
+
+    // Info combate
+    document.querySelectorAll('.info-combate input').forEach(input => {
+      const label = input.previousElementSibling ? input.previousElementSibling.textContent : input.placeholder;
+      if (ficha.combate && ficha.combate[label.toLowerCase()] !== undefined) {
+        input.value = ficha.combate[label.toLowerCase()];
+      }
+    });
+
+    // Atributos
+    const nomesAtributos = ['força', 'destreza', 'constituição', 'inteligência', 'sabedoria', 'carisma'];
+    nomesAtributos.forEach(nome => {
+      const div = Array.from(document.querySelectorAll('h2 + div > .campo')).find(div => div.querySelector('label').textContent.toLowerCase() === nome);
+      if (div && ficha.atributos && ficha.atributos[nome]) {
+        const inputs = div.querySelectorAll('input');
+        inputs[0].value = ficha.atributos[nome].valor || '';
+        inputs[1].value = ficha.atributos[nome].modificador || '';
+      }
+    });
+
+    // Salvaguardas
+    const divsSalv = document.querySelectorAll('h2:nth-of-type(3) + div > .campo');
+    divsSalv.forEach(div => {
+      const nome = div.querySelector('label').textContent.toLowerCase();
+      if (ficha.salvaguardas && ficha.salvaguardas[nome] !== undefined) {
+        div.querySelector('input').value = ficha.salvaguardas[nome];
+      }
+    });
+
+    // Função para preencher tabelas dinâmicas
+    function preencherTabela(idTabela, colunas, dados) {
+      const tabela = document.getElementById(idTabela);
+      // Remove linhas existentes
+      tabela.querySelectorAll('.linha-item').forEach(linha => linha.remove());
+
+      if (!dados) return;
+
+      dados.forEach(item => {
+        const linha = document.createElement('div');
+        linha.className = 'linha-item';
+        colunas.forEach(col => {
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.value = item[col.toLowerCase()] || '';
+          linha.appendChild(input);
+        });
+
+        // Botão remover
+        const btnRemover = document.createElement('button');
+        btnRemover.textContent = '❌';
+        btnRemover.className = 'btn-remover';
+        btnRemover.onclick = () => linha.remove();
+        linha.appendChild(btnRemover);
+
+        tabela.appendChild(linha);
+      });
+    }
+
+    preencherTabela('armasTabela', ['Nome', 'Dano', 'Tipo'], ficha.armas);
+    preencherTabela('inventarioTabela', ['Item'], ficha.inventario);
+    preencherTabela('caracteristicasTabela', ['Característica'], ficha.caracteristicas);
+    preencherTabela('talentosExtrasTabela', ['Talento'], ficha.talentos);
+
+    alert('Ficha carregada com sucesso!');
+  }
+
+  function salvarFichaHTML() {
+    const fichaHTML = document.documentElement.outerHTML;
+    const blob = new Blob([fichaHTML], { type: 'text/html' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'ficha_rpg.html';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  // Função para carregar ficha HTML salva pelo usuário
+  function carregarFicha() {
+  const fichaStr = localStorage.getItem('fichaRPG');
+  if (!fichaStr) {
+    alert('Nenhuma ficha salva encontrada no navegador.');
+    return;
+  }
+  const ficha = JSON.parse(fichaStr);
+
+  // Emoji
+  if (ficha.emoji) document.getElementById('emojiPerfil').textContent = ficha.emoji;
+
+  // Campos simples
+  const camposSimples = ['nome', 'classe', 'nível', 'antecedente', 'raça', 'alinhamento'];
+  camposSimples.forEach(nome => {
+    const label = Array.from(document.querySelectorAll('.campo label')).find(l => l.textContent.toLowerCase() === nome);
+    if (label) label.nextElementSibling.value = ficha[nome] || '';
+  });
+
+  // Info combate
+  document.querySelectorAll('.info-combate input').forEach(input => {
+    // Pegando o label baseado no placeholder
+    const label = input.previousElementSibling ? input.previousElementSibling.textContent : input.placeholder;
+    if (ficha.combate && ficha.combate[label.toLowerCase()] !== undefined) {
+      input.value = ficha.combate[label.toLowerCase()];
+    }
+  });
+
+  // Atributos
+  const nomesAtributos = ['força', 'destreza', 'constituição', 'inteligência', 'sabedoria', 'carisma'];
+  nomesAtributos.forEach(nome => {
+    const div = Array.from(document.querySelectorAll('h2 + div > .campo')).find(div => div.querySelector('label').textContent.toLowerCase() === nome);
+    if (div && ficha.atributos && ficha.atributos[nome]) {
+      const inputs = div.querySelectorAll('input');
+      inputs[0].value = ficha.atributos[nome].valor || '';
+      inputs[1].value = ficha.atributos[nome].modificador || '';
+    }
+  });
+
+  // Salvaguardas
+  const divsSalv = document.querySelectorAll('h2:nth-of-type(3) + div > .campo');
+  divsSalv.forEach(div => {
+    const nome = div.querySelector('label').textContent.toLowerCase();
+    if (ficha.salvaguardas && ficha.salvaguardas[nome] !== undefined) {
+      div.querySelector('input').value = ficha.salvaguardas[nome];
+    }
+  });
+
+  // Função para preencher tabelas dinâmicas
+  function preencherTabela(idTabela, colunas, dados) {
+    const tabela = document.getElementById(idTabela);
+    // Remove linhas existentes
+    tabela.querySelectorAll('.linha-item').forEach(linha => linha.remove());
+
+    if (!dados) return;
+
+    dados.forEach(item => {
+      const linha = document.createElement('div');
+      linha.className = 'linha-item';
+      colunas.forEach(col => {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = item[col.toLowerCase()] || '';
+        linha.appendChild(input);
+      });
+
+      // Botão remover
+      const btnRemover = document.createElement('button');
+      btnRemover.textContent = '❌';
+      btnRemover.className = 'btn-remover';
+      btnRemover.onclick = () => linha.remove();
+      linha.appendChild(btnRemover);
+
+      tabela.appendChild(linha);
+    });
+  }
+
+   preencherTabela('armasTabela', ['Nome', 'Dano', 'Tipo'], ficha.armas);
+    preencherTabela('inventarioTabela', ['Item'], ficha.inventario);
+    preencherTabela('caracteristicasTabela', ['Característica'], ficha.caracteristicas);
+    preencherTabela('talentosExtrasTabela', ['Talento'], ficha.talentos);
+
+  }
+const diceTypes = [
+    { name: 'd4', sides: 4, shape: 'triangle' },
+    { name: 'd6', sides: 6, shape: 'square' },
+    { name: 'd8', sides: 8, shape: 'octagon' },
+    { name: 'd10', sides: 10, shape: 'pentagon' },
+    { name: 'd12', sides: 12, shape: 'dodecagon' },
+    { name: 'd20', sides: 20, shape: 'icosagon' }
+  ];
+
+  function createPolygon(points) {
+    return `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <polygon points="${points}" />
+    </svg>`;
+  }
+
+  function getShapeSVG(shape) {
+    switch(shape) {
+      case 'triangle': // d4
+        return createPolygon("50,10 90,80 10,80");
+      case 'square': // d6
+        return createPolygon("20,20 80,20 80,80 20,80");
+      case 'octagon': // d8
+        return createPolygon("30,10 70,10 90,30 90,70 70,90 30,90 10,70 10,30");
+      case 'pentagon': // d10
+        return createPolygon("50,10 90,38 73,90 27,90 10,38");
+      case 'dodecagon': // d12
+        return createPolygon("50,10 70,15 85,30 90,50 85,70 70,85 50,90 30,85 15,70 10,50 15,30 30,15");
+      case 'icosagon': // d20 (simplificado)
+        return createPolygon("50,10 61,12 72,17 81,25 87,36 90,50 87,64 81,75 72,83 61,88 50,90 39,88 28,83 19,75 13,64 10,50 13,36 19,25 28,17 39,12");
+      default:
+        return '';
+    }
+  }
+
+  const diceListDiv = document.getElementById('dice-list');
+  const rollBtn = document.getElementById('roll-btn');
+  const resultDiv = document.getElementById('result');
+  const toggleBtn = document.getElementById('toggle-btn');
+  const modifierInput = document.getElementById('modifier-input');
+
+  // Criar dados
+  diceTypes.forEach(dice => {
+    const div = document.createElement('div');
+    div.classList.add('dice');
+    div.dataset.sides = dice.sides;
+    div.dataset.name = dice.name;
+    div.title = dice.name.toUpperCase() + " (" + dice.sides + " lados)";
+    div.innerHTML = getShapeSVG(dice.shape);
+    diceListDiv.appendChild(div);
+  });
+
+  // Toggle expandir/recolher
+  toggleBtn.addEventListener('click', () => {
+    diceListDiv.classList.toggle('expanded');
+    toggleBtn.textContent = diceListDiv.classList.contains('expanded') ? '▲' : '▼';
+  });
+
+  // Selecionar dados
+  diceListDiv.addEventListener('click', e => {
+    const dice = e.target.closest('.dice');
+    if (!dice) return;
+
+    dice.classList.toggle('selected');
+
+    const anySelected = diceListDiv.querySelectorAll('.dice.selected').length > 0;
+    rollBtn.disabled = !anySelected;
+    rollBtn.setAttribute('aria-disabled', !anySelected);
+  });
+
+  // Rolar dado
+  function rollDice(sides) {
+    return Math.floor(Math.random() * sides) + 1;
+  }
+
+  // Rolar todos dados selecionados + modificador
+  rollBtn.addEventListener('click', () => {
+    const selectedDice = diceListDiv.querySelectorAll('.dice.selected');
+    if (selectedDice.length === 0) return;
+
+    let total = 0;
+    let details = [];
+
+    selectedDice.forEach(dice => {
+      const sides = parseInt(dice.dataset.sides);
+      const roll = rollDice(sides);
+      details.push(`${dice.dataset.name.toUpperCase()}: ${roll}`);
+      total += roll;
+    });
+
+    const modifier = parseInt(modifierInput.value) || 0;
+    const totalWithModifier = total + modifier;
+
+    let modText = modifier === 0 ? '' : (modifier > 0 ? ` + ${modifier}` : ` - ${Math.abs(modifier)}`);
+
+    resultDiv.innerHTML = `
+      Resultado:<br>
+      ${details.join('<br>')}
+      <br><strong>Total: ${total}${modText} = ${totalWithModifier}</strong>
+    `;
+  });
+   document.querySelectorAll('.bolinha').forEach(bolinha => {
+      bolinha.addEventListener('click', () => {
+        bolinha.classList.toggle('preenchida');
+      });
+    });
+  </script>
+
+</body>
+</html>
